@@ -1,5 +1,4 @@
 # 🏗️ PrompTitecture
-
 > **Production-grade AI Architecture Framework**
 > 
 > Modular, executable architectures for building and deploying intelligent systems
@@ -10,18 +9,192 @@
 
 ## 📖 Overview
 
-PrompTitecture is a comprehensive framework for implementing production-ready AI architectures. It provides modular, battle-tested implementations of advanced AI patterns including:
+PrompTitecture is a comprehensive framework for implementing production-ready AI architectures. It provides modular, battle-tested implementations of advanced AI patterns including Screaming Architecture principles.
 
-- **EC-RAG**: Enterprise Cognitive RAG with multi-hop reasoning
-- **MCP-Swarm**: Multi-Cognitive Process Swarm Intelligence
-- **RCOP**: Recursive Chain of Prompts
-- **FLSIN**: Federated Learning System Integration Network  
-- **HMMAF**: Hierarchical Multi-Model Architecture Framework
-- **MetaReasoner**: Meta-cognitive reasoning engine
-- **AgentOps**: AI Agent Operations platform
-- **GenOps**: Generative AI Operations framework
+## 🔊 Screaming Architecture
 
-## 🚀 Quick Start
+Screaming Architecture is a software design philosophy where the project structure immediately reveals its purpose and domain, rather than the frameworks or tools being used. The architecture "screams" what the application does.
+
+### 🌊 BFS Layer Flow Diagram
+
+```mermaid
+graph TD
+    A[User Request] --> B[Interface Layer]
+    B --> C[Use Cases Layer]
+    C --> D[Domain Layer]
+    D --> E[Infrastructure Layer]
+    
+    B1[Controllers/API] -.-> B
+    B2[CLI/Web UI] -.-> B
+    
+    C1[Business Logic] -.-> C
+    C2[Orchestration] -.-> C
+    
+    D1[Entities] -.-> D
+    D2[Domain Rules] -.-> D
+    D3[Business Objects] -.-> D
+    
+    E1[Database] -.-> E
+    E2[External APIs] -.-> E
+    E3[File System] -.-> E
+    
+    style A fill:#e1f5ff
+    style B fill:#ffe1e1
+    style C fill:#e1ffe1
+    style D fill:#fff4e1
+    style E fill:#f0e1ff
+```
+
+### 📁 Recommended Folder Structure
+
+```
+prompTitecture/
+├── docs/                          # Documentation
+│   ├── architecture/              # Architecture diagrams and specs
+│   ├── guides/                    # User guides and tutorials
+│   └── api/                       # API documentation
+│
+├── src/
+│   ├── python/                    # Python implementation
+│   │   ├── interface/            # Interface adapters
+│   │   │   ├── api/              # REST API controllers
+│   │   │   ├── cli/              # Command-line interface
+│   │   │   └── web/              # Web UI controllers
+│   │   │
+│   │   ├── use_cases/            # Application business rules
+│   │   │   ├── orchestration/   # Workflow orchestration
+│   │   │   ├── validation/      # Input validation
+│   │   │   └── transformation/  # Data transformation
+│   │   │
+│   │   ├── domain/               # Enterprise business rules
+│   │   │   ├── entities/        # Core business entities
+│   │   │   ├── repositories/    # Repository interfaces
+│   │   │   └── services/        # Domain services
+│   │   │
+│   │   └── infrastructure/       # External interfaces
+│   │       ├── database/        # Database implementations
+│   │       ├── external_apis/   # Third-party API clients
+│   │       └── file_system/     # File operations
+│   │
+│   └── javascript/               # JavaScript implementation
+│       ├── interface/
+│       ├── use_cases/
+│       ├── domain/
+│       └── infrastructure/
+│
+├── tests/
+│   ├── unit/                     # Unit tests
+│   │   ├── python/
+│   │   └── javascript/
+│   ├── integration/              # Integration tests
+│   └── e2e/                      # End-to-end tests
+│
+├── .github/
+│   └── workflows/
+│       ├── ci.yml               # Continuous integration
+│       ├── cd.yml               # Continuous deployment
+│       └── docs.yml             # Documentation deployment
+│
+├── examples/                     # Example implementations
+├── scripts/                      # Build and deployment scripts
+└── README.md                     # This file
+```
+
+### 🎯 Component Explanations
+
+#### 1. **Interface Layer** (`src/{lang}/interface/`)
+**Purpose:** Adapts external requests to internal use cases
+
+- **API Controllers:** Handle HTTP requests, validate inputs, format responses
+- **CLI:** Command-line interface for terminal operations
+- **Web UI:** Frontend controllers and view logic
+
+**Key Principles:**
+- No business logic
+- Thin adapter layer
+- Framework-specific code isolated here
+- Converts external formats to domain models
+
+#### 2. **Use Cases Layer** (`src/{lang}/use_cases/`)
+**Purpose:** Application-specific business rules and orchestration
+
+- **Orchestration:** Coordinates multiple domain services
+- **Validation:** Enforces application-level constraints
+- **Transformation:** Prepares data for domain layer
+
+**Key Principles:**
+- Framework-agnostic
+- Contains application flow logic
+- Orchestrates domain entities
+- Defines interfaces for infrastructure needs
+
+#### 3. **Domain Layer** (`src/{lang}/domain/`)
+**Purpose:** Core business logic and enterprise rules
+
+- **Entities:** Core business objects with behavior
+- **Repositories:** Interfaces for data persistence (no implementations)
+- **Services:** Domain-specific operations that don't belong to entities
+
+**Key Principles:**
+- Zero external dependencies
+- Pure business logic
+- Framework-agnostic
+- Most stable layer (changes least frequently)
+
+#### 4. **Infrastructure Layer** (`src/{lang}/infrastructure/`)
+**Purpose:** Technical implementations and external integrations
+
+- **Database:** ORM implementations, queries, migrations
+- **External APIs:** Third-party service clients
+- **File System:** File I/O operations
+
+**Key Principles:**
+- Implements interfaces defined in domain/use cases
+- Contains all framework-specific implementations
+- Pluggable and replaceable
+- Most volatile layer (changes most frequently)
+
+### 🔄 Dependency Flow
+
+```
+Interface → Use Cases → Domain ← Infrastructure
+                ↑                      ↑
+                └──────────────────────┘
+                (Dependency Inversion)
+```
+
+**Critical Rules:**
+1. Dependencies point inward (toward domain)
+2. Domain layer has ZERO dependencies
+3. Infrastructure implements interfaces from inner layers
+4. Use Dependency Injection for loose coupling
+
+### 📊 Testing Strategy
+
+#### Unit Tests (`tests/unit/`)
+- Test individual components in isolation
+- Mock external dependencies
+- Fast execution (<1s per test)
+- High coverage (>80%)
+
+#### Integration Tests (`tests/integration/`)
+- Test layer interactions
+- Use test databases/services
+- Verify data flow
+- Medium execution time
+
+#### E2E Tests (`tests/e2e/`)
+- Test complete user workflows
+- Use production-like environment
+- Verify system behavior
+- Slower execution
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Python 3.9+ or Node.js 16+
+- Docker (optional, for containerized deployment)
+- Git
 
 ### Installation
 
@@ -30,213 +203,79 @@ PrompTitecture is a comprehensive framework for implementing production-ready AI
 git clone https://github.com/GaboBase/promptitecture.git
 cd promptitecture
 
-# Install dependencies
+# Python setup
+cd src/python
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-# Install in development mode
-pip install -e .
-```
-
-### Usage
-
-#### CLI
-
-```bash
-# Run an architecture
-promptitecture run ec-rag --input "query.txt"
-
-# List available architectures  
-promptitecture list
-
-# Get architecture info
-promptitecture info flsin
-```
-
-#### Python API
-
-```python
-from promptitecture.architectures import ECRAG
-
-# Initialize architecture
-rag = ECRAG(config={'model': 'gpt-4'})
-
-# Execute query
-result = rag.query("What is quantum computing?")
-print(result)
-```
-
-## 📁 Project Structure
-
-```
-promptitecture/
-├── src/
-│   └── promptitecture/
-│       ├── __init__.py          # Package initialization
-│       ├── architectures/       # Architecture implementations
-│       │   ├── ec_rag/         # Enterprise Cognitive RAG
-│       │   ├── mcp_swarm/      # MCP Swarm Intelligence
-│       │   ├── rcop/           # Recursive Chain of Prompts
-│       │   ├── flsin/          # Federated Learning Network
-│       │   ├── hmmaf/          # Hierarchical Multi-Model
-│       │   ├── metareasoner/   # Meta-cognitive Reasoning
-│       │   ├── agentops/       # Agent Operations
-│       │   └── genops/         # Generative AI Ops
-│       ├── cli/                # Command-line interface
-│       ├── api/                # FastAPI REST API
-│       ├── core/               # Core utilities
-│       └── playground/         # Interactive playground
-├── tests/                      # Unit and integration tests
-├── docs/                       # Documentation
-├── docker/                     # Docker configurations
-├── .github/                    # GitHub Actions CI/CD
-├── setup.py                    # Package setup
-├── requirements.txt            # Dependencies
-├── README.md                   # This file
-└── .gitignore                  # Git ignore rules
-```
-
-## 🏛️ Architectures
-
-### EC-RAG (Enterprise Cognitive RAG)
-Advanced Retrieval-Augmented Generation with:
-- Multi-hop reasoning
-- Knowledge graph integration
-- Cognitive process modeling
-- Enterprise-grade security
-
-### MCP-Swarm (Multi-Cognitive Process Swarm)
-Distributed intelligence system featuring:
-- Swarm-based problem solving
-- Multi-agent coordination
-- Emergent behavior patterns
-- Adaptive optimization
-
-### RCOP (Recursive Chain of Prompts)
-Iterative prompt engineering with:
-- Self-improving prompts
-- Recursive reasoning loops
-- Context preservation
-- Performance optimization
-
-### FLSIN (Federated Learning System Integration)
-Distributed learning framework with:
-- Privacy-preserving training
-- Federated model aggregation
-- Cross-silo collaboration
-- Edge deployment support
-
-### HMMAF (Hierarchical Multi-Model Architecture)
-Layered model orchestration with:
-- Model hierarchy management
-- Dynamic model selection
-- Resource optimization
-- Fallback strategies
-
-## 🛠️ Development
-
-### Setup Development Environment
-
-```bash
-# Install development dependencies
-pip install -e ".[dev]"
-
-# Install pre-commit hooks
-pre-commit install
-
-# Run tests
-pytest tests/
-
-# Run linting
-black src/
-ruff check src/
-mypy src/
+# JavaScript setup
+cd src/javascript
+npm install
 ```
 
 ### Running Tests
 
 ```bash
-# Run all tests
-pytest
+# Python tests
+cd src/python
+pytest tests/
 
-# Run with coverage
-pytest --cov=promptitecture tests/
-
-# Run specific architecture tests
-pytest tests/test_ec_rag.py
-```
-
-## 🚢 Deployment
-
-### Docker
-
-```bash
-# Build image
-docker build -t promptitecture:latest .
-
-# Run container
-docker run -p 8000:8000 promptitecture:latest
-```
-
-### Docker Compose
-
-```bash
-# Start all services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop services
-docker-compose down
+# JavaScript tests
+cd src/javascript
+npm test
 ```
 
 ## 📚 Documentation
 
-Full documentation is available at [promptitecture.dev](https://promptitecture.dev)
+Comprehensive documentation is available in the `docs/` directory:
 
-- [Architecture Guide](docs/architectures/)
-- [API Reference](docs/api/)
-- [CLI Reference](docs/cli/)
-- [Deployment Guide](docs/deployment/)
-- [Contributing Guide](CONTRIBUTING.md)
+- [Architecture Guide](docs/architecture/README.md)
+- [API Reference](docs/api/README.md)
+- [User Guides](docs/guides/README.md)
+
+View the live documentation at: [https://gabobase.github.io/promptitecture](https://gabobase.github.io/promptitecture)
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- Code of Conduct
+- Development process
+- Pull request guidelines
+- Coding standards
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🌟 Features
 
-- Inspired by cutting-edge AI research and production systems
-- Built with ❤️ by the PrompTitecture team
-- Special thanks to all contributors
+- **Clean Architecture:** Separation of concerns with clear boundaries
+- **Screaming Architecture:** Structure reveals intent
+- **Framework Agnostic:** Core logic independent of frameworks
+- **Test-Driven:** Comprehensive test coverage
+- **Multi-Language:** Python and JavaScript implementations
+- **CI/CD Ready:** GitHub Actions workflows included
+- **Documentation:** Auto-generated docs with GitHub Pages
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/GaboBase/promptitecture/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/GaboBase/promptitecture/discussions)
-- **Email**: support@promptitecture.dev
+- **Issues:** [GitHub Issues](https://github.com/GaboBase/promptitecture/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/GaboBase/promptitecture/discussions)
+- **Email:** support@promptitecture.dev
 
 ## 🗺️ Roadmap
 
-- [x] Core framework implementation
-- [x] CLI interface
-- [ ] REST API
-- [ ] Web playground
-- [ ] Additional architectures
-- [ ] Performance optimizations
-- [ ] Cloud deployment templates
-- [ ] Comprehensive documentation
+- [ ] Complete Python implementation
+- [ ] Complete JavaScript implementation
+- [ ] Add example applications
+- [ ] CLI tool for scaffolding
+- [ ] Docker compose templates
+- [ ] Integration with popular AI services
+- [ ] Performance benchmarks
+- [ ] Video tutorials
 
 ---
 
-**Made with 🏗️ by [GaboBase](https://github.com/GaboBase)**
+**Built with ❤️ by the PrompTitecture Team**
